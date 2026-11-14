@@ -1,0 +1,17 @@
+name: Validate reviewed source
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate-reviewed-source:
+    name: validate-reviewed-source
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Enforce integrity only for changed reviewed sources
+        run: python3 tools/validate_source.py origin/main
